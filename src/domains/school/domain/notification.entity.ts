@@ -1,5 +1,6 @@
 import { adminEntity } from 'src/domains/admin/domain/admin.entity';
 import { Column, Entity, Index, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { schoolEntity } from './school.entity';
 
 @Index('FK_school', ['schoolId'], {})
 @Index('FK_register', ['registerId'], {})
@@ -39,6 +40,13 @@ export class notificationEntity {
     default: () => 'CURRENT_TIMESTAMP',
   })
   updatedAt: Date;
+
+  @ManyToOne(() => schoolEntity, (school) => school.notification, {
+    onDelete: 'RESTRICT',
+    onUpdate: 'RESTRICT',
+  })
+  @JoinColumn([{ name: 'school_id', referencedColumnName: 'id' }])
+  school: schoolEntity;
 
   @ManyToOne(() => adminEntity, (admin) => admin.registrant, {
     onDelete: 'RESTRICT',

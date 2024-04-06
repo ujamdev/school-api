@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { schoolEntity } from 'src/domains/school/domain/school.entity';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity('region', { schema: 'school_notification' })
 export class regionEntity {
@@ -7,4 +8,7 @@ export class regionEntity {
 
   @Column({ type: 'varchar', name: 'name', comment: '지역 이름', length: 20 })
   name: number;
+
+  @OneToMany(() => schoolEntity, (school) => school.region)
+  school: schoolEntity[];
 }
