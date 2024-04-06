@@ -1,6 +1,6 @@
 import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
 
-export class createSchoolRequest {
+export class CreateSchoolRequest {
   @IsNumber()
   @IsNotEmpty()
   regionId: number;
