@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { studentSchoolEntity } from './student.school.entity';
 
 @Entity('student', { schema: 'school_notification' })
 export class studentEntity {
@@ -18,4 +19,7 @@ export class studentEntity {
     default: () => 'CURRENT_TIMESTAMP',
   })
   updatedAt: Date;
+
+  @OneToMany(() => studentSchoolEntity, (studentSchool) => studentSchool.student)
+  studentSchool: studentSchoolEntity[];
 }

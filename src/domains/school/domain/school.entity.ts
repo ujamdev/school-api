@@ -9,6 +9,7 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { notificationEntity } from './notification.entity';
+import { studentSchoolEntity } from 'src/domains/student/domain/student.school.entity';
 
 @Index('FK_region', ['regionId'], {})
 @Entity('school', { schema: 'school_notification' })
@@ -35,6 +36,9 @@ export class schoolEntity {
     default: () => 'CURRENT_TIMESTAMP',
   })
   updatedAt: Date;
+
+  @OneToMany(() => studentSchoolEntity, (studentSchool) => studentSchool.school)
+  studentSchool: studentSchoolEntity[];
 
   @ManyToOne(() => regionEntity, (region) => region.school, {
     onDelete: 'RESTRICT',
