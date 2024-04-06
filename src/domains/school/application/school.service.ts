@@ -1,4 +1,5 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
+import { MessageResponse } from 'src/commons/dto/message.response';
 import { createSchoolRequest } from '../domain/dto/create.school.request';
 import { schoolRepository } from '../domain/school.repository';
 
@@ -6,7 +7,7 @@ import { schoolRepository } from '../domain/school.repository';
 export class SchoolService {
   constructor(private readonly schoolRepository: schoolRepository) { }
 
-  async createSchool(request: createSchoolRequest) {
+  async createSchool(request: createSchoolRequest): Promise<MessageResponse> {
     try {
       const result = await this.schoolRepository.createSchool(request);
 
@@ -14,7 +15,7 @@ export class SchoolService {
         throw new BadRequestException(`School was not successfully created`);
       }
 
-      return result;
+      return MessageResponse.of('학교 등록에 성공했습니다.');
     } catch (error) {
       throw new Error(`Failed to create school: ${error}`);
     }
