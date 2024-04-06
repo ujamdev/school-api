@@ -7,7 +7,7 @@ export class regionEntity {
   id: number;
 
   @Column({ type: 'varchar', name: 'name', comment: '지역 이름', length: 20 })
-  name: number;
+  name: string;
 
   @OneToMany(() => schoolEntity, (school) => school.region)
   school: schoolEntity[];
