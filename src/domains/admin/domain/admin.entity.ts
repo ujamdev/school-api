@@ -7,7 +7,7 @@ export class adminEntity {
   id: number;
 
   @Column({ type: 'varchar', name: 'name', comment: '관리자 이름', length: 20 })
-  name: number;
+  name: string;
 
   @OneToMany(() => notificationEntity, (notification) => notification.registrant)
   registrant: notificationEntity[];

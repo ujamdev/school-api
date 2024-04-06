@@ -1,4 +1,5 @@
 import { regionEntity } from 'src/domains/region/domain/region.entity';
+import { studentSchoolEntity } from 'src/domains/student/domain/student.school.entity';
 import {
   Column,
   Entity,
@@ -9,7 +10,6 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { notificationEntity } from './notification.entity';
-import { studentSchoolEntity } from 'src/domains/student/domain/student.school.entity';
 
 @Index('FK_region', ['regionId'], {})
 @Entity('school', { schema: 'school_notification' })
@@ -21,7 +21,7 @@ export class schoolEntity {
   regionId: number;
 
   @Column({ type: 'varchar', name: 'name', comment: '학교 이름', length: 20 })
-  name: number;
+  name: string;
 
   @Column('datetime', {
     name: 'created_at',
