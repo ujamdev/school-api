@@ -1,5 +1,5 @@
-import { regionEntity } from 'src/domains/region/domain/region.entity';
-import { studentSchoolEntity } from 'src/domains/student/domain/student.school.entity';
+import { RegionEntity } from 'src/domains/region/domain/region.entity';
+import { StudentSchoolEntity } from 'src/domains/student/domain/student.school.entity';
 import {
   Column,
   Entity,
@@ -9,11 +9,11 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { notificationEntity } from './notification.entity';
+import { NotificationEntity } from './notification.entity';
 
 @Index('FK_region', ['regionId'], {})
 @Entity('school', { schema: 'school_notification' })
-export class schoolEntity {
+export class SchoolEntity {
   @PrimaryGeneratedColumn({ type: 'int', name: 'id', comment: '학교 인덱스' })
   id: number;
 
@@ -37,16 +37,16 @@ export class schoolEntity {
   })
   updatedAt: Date;
 
-  @OneToMany(() => studentSchoolEntity, (studentSchool) => studentSchool.school)
-  studentSchool: studentSchoolEntity[];
+  @OneToMany(() => StudentSchoolEntity, (studentSchool) => studentSchool.school)
+  studentSchool: StudentSchoolEntity[];
 
-  @ManyToOne(() => regionEntity, (region) => region.school, {
+  @ManyToOne(() => RegionEntity, (region) => region.school, {
     onDelete: 'RESTRICT',
     onUpdate: 'RESTRICT',
   })
   @JoinColumn([{ name: 'region_id', referencedColumnName: 'id' }])
-  region: regionEntity;
+  region: RegionEntity;
 
-  @OneToMany(() => notificationEntity, (notification) => notification.school)
-  notification: notificationEntity[];
+  @OneToMany(() => NotificationEntity, (notification) => notification.school)
+  notification: NotificationEntity[];
 }

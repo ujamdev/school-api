@@ -1,14 +1,14 @@
 import { InsertResult, Repository } from 'typeorm';
 import { CustomRepository } from '../../../commons/decorator/typeorm.decorator';
-import { createSchoolRequest } from './dto/create.school.request';
-import { schoolEntity } from './school.entity';
+import { CreateSchoolRequest } from './dto/create.school.request';
+import { SchoolEntity } from './school.entity';
 
-@CustomRepository(schoolEntity)
-export class schoolRepository extends Repository<schoolEntity> {
-  async createSchool(request: createSchoolRequest): Promise<InsertResult> {
+@CustomRepository(SchoolEntity)
+export class SchoolRepository extends Repository<SchoolEntity> {
+  async createSchool(request: CreateSchoolRequest): Promise<InsertResult> {
     return await this.createQueryBuilder('school')
       .insert()
-      .into(schoolEntity)
+      .into(SchoolEntity)
       .values({ regionId: request.regionId, name: request.name })
       .execute();
   }

@@ -1,11 +1,11 @@
-import { schoolEntity } from 'src/domains/school/domain/school.entity';
+import { SchoolEntity } from 'src/domains/school/domain/school.entity';
 import { Column, Entity, Index, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
-import { studentEntity } from './student.entity';
+import { StudentEntity } from './student.entity';
 
 @Index('FK_student', ['studentId'], {})
 @Index('FK_school', ['schoolId'], {})
 @Entity('student_school', { schema: 'school_notification' })
-export class studentSchoolEntity {
+export class StudentSchoolEntity {
   @PrimaryGeneratedColumn({
     type: 'int',
     name: 'id',
@@ -33,17 +33,17 @@ export class studentSchoolEntity {
   })
   updatedAt: Date;
 
-  @ManyToOne(() => studentEntity, (student) => student.studentSchool, {
+  @ManyToOne(() => StudentEntity, (student) => student.studentSchool, {
     onDelete: 'RESTRICT',
     onUpdate: 'RESTRICT',
   })
   @JoinColumn([{ name: 'student_id', referencedColumnName: 'id' }])
-  student: studentEntity;
+  student: StudentEntity;
 
-  @ManyToOne(() => schoolEntity, (school) => school.studentSchool, {
+  @ManyToOne(() => SchoolEntity, (school) => school.studentSchool, {
     onDelete: 'RESTRICT',
     onUpdate: 'RESTRICT',
   })
   @JoinColumn([{ name: 'school_id', referencedColumnName: 'id' }])
-  school: schoolEntity;
+  school: SchoolEntity;
 }

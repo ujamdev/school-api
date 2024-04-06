@@ -1,8 +1,8 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
-import { studentSchoolEntity } from './student.school.entity';
+import { StudentSchoolEntity } from './student.school.entity';
 
 @Entity('student', { schema: 'school_notification' })
-export class studentEntity {
+export class StudentEntity {
   @PrimaryGeneratedColumn({ type: 'int', name: 'id', comment: '학생 인덱스' })
   id: number;
 
@@ -20,6 +20,6 @@ export class studentEntity {
   })
   updatedAt: Date;
 
-  @OneToMany(() => studentSchoolEntity, (studentSchool) => studentSchool.student)
-  studentSchool: studentSchoolEntity[];
+  @OneToMany(() => StudentSchoolEntity, (studentSchool) => studentSchool.student)
+  studentSchool: StudentSchoolEntity[];
 }

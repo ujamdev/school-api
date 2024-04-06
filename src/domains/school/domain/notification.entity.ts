@@ -1,12 +1,12 @@
-import { adminEntity } from 'src/domains/admin/domain/admin.entity';
+import { AdminEntity } from 'src/domains/admin/domain/admin.entity';
 import { Column, Entity, Index, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
-import { schoolEntity } from './school.entity';
+import { SchoolEntity } from './school.entity';
 
 @Index('FK_school', ['schoolId'], {})
 @Index('FK_register', ['registerId'], {})
 @Index('FK_modifier', ['modifierId'], {})
 @Entity('notification', { schema: 'school_notification' })
-export class notificationEntity {
+export class NotificationEntity {
   @PrimaryGeneratedColumn({ type: 'int', name: 'id', comment: '소식 인덱스' })
   id: number;
 
@@ -19,12 +19,12 @@ export class notificationEntity {
     comment: '소식 내용',
     length: 1000,
   })
-  content: number;
+  content: string;
 
   @Column({ type: 'int', name: 'register_id', comment: '등록자 인덱스' })
   registerId: number;
 
-  @Column({ type: 'int', name: 'modifier_id', comment: '수정자 인덱스' })
+  @Column({ type: 'int', name: 'modifier_id', comment: '수정자 인덱스', nullable: true })
   modifierId: number;
 
   @Column('datetime', {
@@ -41,24 +41,24 @@ export class notificationEntity {
   })
   updatedAt: Date;
 
-  @ManyToOne(() => schoolEntity, (school) => school.notification, {
+  @ManyToOne(() => SchoolEntity, (school) => school.notification, {
     onDelete: 'RESTRICT',
     onUpdate: 'RESTRICT',
   })
   @JoinColumn([{ name: 'school_id', referencedColumnName: 'id' }])
-  school: schoolEntity;
+  school: SchoolEntity;
 
-  @ManyToOne(() => adminEntity, (admin) => admin.registrant, {
+  @ManyToOne(() => AdminEntity, (admin) => admin.registrant, {
     onDelete: 'RESTRICT',
     onUpdate: 'RESTRICT',
   })
   @JoinColumn([{ name: 'register_id', referencedColumnName: 'id' }])
-  registrant: adminEntity;
+  registrant: AdminEntity;
 
-  @ManyToOne(() => adminEntity, (admin) => admin.modifier, {
+  @ManyToOne(() => AdminEntity, (admin) => admin.modifier, {
     onDelete: 'RESTRICT',
     onUpdate: 'RESTRICT',
   })
   @JoinColumn([{ name: 'modifier_id', referencedColumnName: 'id' }])
-  modifier: adminEntity;
+  modifier: AdminEntity;
 }
