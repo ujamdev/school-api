@@ -1,8 +1,8 @@
 import { Controller, Delete, Get, Param, Post, Query } from '@nestjs/common';
-import { MessageResponse } from 'src/commons/dto/message.response';
-import { PaginationRequest } from 'src/commons/dto/pagination.request';
-import { NotificationEntity } from 'src/domains/school/domain/notification.entity';
-import { SchoolEntity } from 'src/domains/school/domain/school.entity';
+import { MessageResponse } from '../../../commons/dto/message.response';
+import { PaginationRequest } from '../../../commons/dto/pagination.request';
+import { NotificationEntity } from '../../school/domain/notification.entity';
+import { SchoolEntity } from '../../school/domain/school.entity';
 import { StudentService } from '../application/student.service';
 import { CreateStudentSchoolRequest } from '../domain/dto/create.student.school.request';
 import { DeleteStudentSchoolRequest } from '../domain/dto/delete.student.school.request';

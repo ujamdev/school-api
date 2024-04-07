@@ -1,7 +1,7 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
-import { MessageResponse } from 'src/commons/dto/message.response';
-import { PaginationRequest } from 'src/commons/dto/pagination.request';
-import { GetSchoolNotificationsRequest } from 'src/domains/student/domain/dto/get.school.notifications.request';
+import { MessageResponse } from '../../../commons/dto/message.response';
+import { PaginationRequest } from '../../../commons/dto/pagination.request';
+import { GetSchoolNotificationsRequest } from '../../student/domain/dto/get.school.notifications.request';
 import { CreateNotificationRequest } from '../domain/dto/create.notification.request';
 import { CreateSchoolRequest } from '../domain/dto/create.school.request';
 import { UpdateNotificationRequest } from '../domain/dto/update.notification.request';

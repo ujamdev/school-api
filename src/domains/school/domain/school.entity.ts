@@ -1,5 +1,3 @@
-import { RegionEntity } from 'src/domains/region/domain/region.entity';
-import { StudentSchoolEntity } from 'src/domains/student/domain/student.school.entity';
 import {
   Column,
   Entity,
@@ -9,6 +7,8 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
+import { RegionEntity } from '../../region/domain/region.entity';
+import { StudentSchoolEntity } from '../../student/domain/student.school.entity';
 import { NotificationEntity } from './notification.entity';
 
 @Index('FK_region', ['regionId'], {})

@@ -1,5 +1,5 @@
-import { SchoolEntity } from 'src/domains/school/domain/school.entity';
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { SchoolEntity } from '../../school/domain/school.entity';
 
 @Entity('region', { schema: 'school_notification' })
 export class RegionEntity {

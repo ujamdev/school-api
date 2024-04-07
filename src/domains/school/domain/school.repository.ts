@@ -1,7 +1,7 @@
-import { PaginationRequest } from 'src/commons/dto/pagination.request';
-import { YesNo } from 'src/commons/enum/yes.no';
 import { InsertResult, Repository } from 'typeorm';
 import { CustomRepository } from '../../../commons/decorator/typeorm.decorator';
+import { PaginationRequest } from '../../../commons/dto/pagination.request';
+import { YesNo } from '../../../commons/enum/yes.no';
 import { CreateSchoolRequest } from './dto/create.school.request';
 import { SchoolEntity } from './school.entity';
 

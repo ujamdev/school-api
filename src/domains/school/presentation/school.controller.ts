@@ -1,5 +1,5 @@
 import { Body, Controller, Delete, Param, Patch, Post } from '@nestjs/common';
-import { MessageResponse } from 'src/commons/dto/message.response';
+import { MessageResponse } from '../../../commons/dto/message.response';
 import { SchoolService } from '../application/school.service';
 import { CreateNotificationRequest } from '../domain/dto/create.notification.request';
 import { CreateSchoolRequest } from '../domain/dto/create.school.request';
