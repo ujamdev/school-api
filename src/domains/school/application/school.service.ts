@@ -1,9 +1,11 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { MessageResponse } from 'src/commons/dto/message.response';
+import { GetStudentSchoolsRequest } from 'src/domains/student/domain/dto/get.student.schools.request';
 import { CreateNotificationRequest } from '../domain/dto/create.notification.request';
 import { CreateSchoolRequest } from '../domain/dto/create.school.request';
 import { UpdateNotificationRequest } from '../domain/dto/update.notification.request';
 import { NotificationRepository } from '../domain/notification.repository';
+import { SchoolEntity } from '../domain/school.entity';
 import { SchoolRepository } from '../domain/school.repository';
 
 @Injectable()
@@ -83,5 +85,14 @@ export class SchoolService {
     } catch (error) {
       throw new Error(`Failed to delete notification: ${error}`);
     }
+  }
+
+  async getSubscribeSchools(
+    studentId: number,
+    request: GetStudentSchoolsRequest,
+  ): Promise<SchoolEntity[]> {
+    const schools = await this.schoolRepository.findSubscribeSchools(studentId, request);
+
+    return schools;
   }
 }
