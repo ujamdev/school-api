@@ -1,12 +1,14 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { MessageResponse } from 'src/commons/dto/message.response';
+import { PaginationRequest } from 'src/commons/dto/pagination.request';
+import { GetSchoolNotificationsRequest } from 'src/domains/student/domain/dto/get.school.notifications.request';
 import { CreateNotificationRequest } from '../domain/dto/create.notification.request';
 import { CreateSchoolRequest } from '../domain/dto/create.school.request';
 import { UpdateNotificationRequest } from '../domain/dto/update.notification.request';
+import { NotificationEntity } from '../domain/notification.entity';
 import { NotificationRepository } from '../domain/notification.repository';
 import { SchoolEntity } from '../domain/school.entity';
 import { SchoolRepository } from '../domain/school.repository';
-import { PaginationRequest } from 'src/commons/dto/pagination.request';
 
 @Injectable()
 export class SchoolService {
@@ -92,5 +94,12 @@ export class SchoolService {
     request: PaginationRequest,
   ): Promise<SchoolEntity[]> {
     return await this.schoolRepository.findSubscribeSchools(studentId, request);
+  }
+
+  async getSchoolNotifications(
+    param: GetSchoolNotificationsRequest,
+    request: PaginationRequest,
+  ): Promise<NotificationEntity[]> {
+    return await this.notificationRepository.findSchoolNotifications(param, request);
   }
 }
