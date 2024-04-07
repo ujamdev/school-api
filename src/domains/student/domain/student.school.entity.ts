@@ -1,6 +1,7 @@
 import { SchoolEntity } from 'src/domains/school/domain/school.entity';
 import { Column, Entity, Index, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { StudentEntity } from './student.entity';
+import { YesNo } from 'src/commons/enum/yes.no';
 
 @Index('FK_student', ['studentId'], {})
 @Index('FK_school', ['schoolId'], {})
@@ -18,6 +19,15 @@ export class StudentSchoolEntity {
 
   @Column({ type: 'int', name: 'school_id', comment: '학교 인덱스' })
   schoolId: number;
+
+  @Column({
+    type: 'enum',
+    enum: YesNo,
+    name: 'is_active',
+    comment: '활성화 여부',
+    default: YesNo.YES,
+  })
+  isActive: YesNo;
 
   @Column('datetime', {
     name: 'created_at',
