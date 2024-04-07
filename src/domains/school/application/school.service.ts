@@ -2,6 +2,7 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 import { MessageResponse } from 'src/commons/dto/message.response';
 import { CreateNotificationRequest } from '../domain/dto/create.notification.request';
 import { CreateSchoolRequest } from '../domain/dto/create.school.request';
+import { UpdateNotificationRequest } from '../domain/dto/update.notification.request';
 import { NotificationRepository } from '../domain/notification.repository';
 import { SchoolRepository } from '../domain/school.repository';
 
@@ -26,6 +27,17 @@ export class SchoolService {
     }
   }
 
+  async getNotification(notificationId: number) {
+    const result = await this.notificationRepository.getNotification(notificationId);
+
+    if (!result)
+      throw new BadRequestException(
+        `Notification does not exist for notificationId: ${notificationId}`,
+      );
+
+    return result;
+  }
+
   async createNotification(request: CreateNotificationRequest): Promise<MessageResponse> {
     try {
       const result = await this.notificationRepository.createNotification(request);
@@ -37,6 +49,25 @@ export class SchoolService {
       return MessageResponse.of('소식 등록에 성공했습니다.');
     } catch (error) {
       throw new Error(`Failed to create notification: ${error}`);
+    }
+  }
+
+  async updateNotification(
+    notificationId: number,
+    request: UpdateNotificationRequest,
+  ): Promise<MessageResponse> {
+    await this.getNotification(notificationId);
+
+    try {
+      const result = await this.notificationRepository.updateNotification(notificationId, request);
+
+      if (result.affected === 0) {
+        throw new BadRequestException(`Notification was not successfully updated`);
+      }
+
+      return MessageResponse.of('소식 수정에 성공했습니다.');
+    } catch (error) {
+      throw new Error(`Failed to update notification: ${error}`);
     }
   }
 
