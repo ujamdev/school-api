@@ -1,14 +1,22 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { MessageResponse } from 'src/commons/dto/message.response';
 import { YesNo } from 'src/commons/enum/yes.no';
+import { SchoolService } from 'src/domains/school/application/school.service';
+import { SchoolEntity } from 'src/domains/school/domain/school.entity';
 import { CreateStudentSchoolRequest } from '../domain/dto/create.student.school.request';
 import { DeleteStudentSchoolRequest } from '../domain/dto/delete.student.school.request';
+import {
+  GetStudentSchoolsRequest
+} from '../domain/dto/get.student.schools.request';
 import { StudentSchoolEntity } from '../domain/student.school.entity';
 import { StudentSchoolRepository } from '../domain/student.school.repository';
 
 @Injectable()
 export class StudentService {
-  constructor(private readonly studentSchoolRepository: StudentSchoolRepository) { }
+  constructor(
+    private readonly studentSchoolRepository: StudentSchoolRepository,
+    private readonly schoolService: SchoolService,
+  ) { }
 
   async getStudentSchool(studentId: number, schoolId: number): Promise<StudentSchoolEntity> {
     return await this.studentSchoolRepository.getStudentSchool(studentId, schoolId);
@@ -73,5 +81,12 @@ export class StudentService {
     } catch (error) {
       throw new Error(`Failed to delete Student-School: ${error}`);
     }
+  }
+
+  async getSubscribeSchools(
+    studentId: number,
+    request: GetStudentSchoolsRequest,
+  ): Promise<SchoolEntity[]> {
+    return await this.schoolService.getSubscribeSchools(studentId, request);
   }
 }

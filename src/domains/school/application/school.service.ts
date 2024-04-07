@@ -91,8 +91,6 @@ export class SchoolService {
     studentId: number,
     request: GetStudentSchoolsRequest,
   ): Promise<SchoolEntity[]> {
-    const schools = await this.schoolRepository.findSubscribeSchools(studentId, request);
-
-    return schools;
+    return await this.schoolRepository.findSubscribeSchools(studentId, request);
   }
 }
