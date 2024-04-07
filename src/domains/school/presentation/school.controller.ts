@@ -1,8 +1,9 @@
-import { Body, Controller, Delete, Param, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Param, Patch, Post } from '@nestjs/common';
 import { MessageResponse } from 'src/commons/dto/message.response';
 import { SchoolService } from '../application/school.service';
 import { CreateNotificationRequest } from '../domain/dto/create.notification.request';
 import { CreateSchoolRequest } from '../domain/dto/create.school.request';
+import { UpdateNotificationRequest } from '../domain/dto/update.notification.request';
 
 @Controller('api')
 export class SchoolController {
@@ -26,6 +27,20 @@ export class SchoolController {
   @Post('/notifications')
   async createNotification(@Body() request: CreateNotificationRequest): Promise<MessageResponse> {
     return await this.schoolService.createNotification(request);
+  }
+
+  /**
+   * 학교 관리자는 학교 페이지 내에 소식 수정
+   * @param {number} notificationId
+   * @param {UpdateNotificationRequest} request
+   * @return {Promise<MessageResponse>}
+   */
+  @Patch('/notifications/:notificationId')
+  async updateNotification(
+    @Param('notificationId') notificationId: number,
+    @Body() request: UpdateNotificationRequest,
+  ): Promise<MessageResponse> {
+    return await this.schoolService.updateNotification(notificationId, request);
   }
 
   /**
