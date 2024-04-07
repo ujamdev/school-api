@@ -39,4 +39,18 @@ export class SchoolService {
       throw new Error(`Failed to create notification: ${error}`);
     }
   }
+
+  async deleteNotification(notificationId: number): Promise<MessageResponse> {
+    try {
+      const result = await this.notificationRepository.deleteNotification(notificationId);
+
+      if (result.affected === 0) {
+        throw new BadRequestException(`Notification was not successfully deleted`);
+      }
+
+      return MessageResponse.of('소식 삭제에 성공했습니다.');
+    } catch (error) {
+      throw new Error(`Failed to delete notification: ${error}`);
+    }
+  }
 }

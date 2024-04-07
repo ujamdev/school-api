@@ -1,3 +1,4 @@
+import { YesNo } from 'src/commons/enum/yes.no';
 import { AdminEntity } from 'src/domains/admin/domain/admin.entity';
 import { Column, Entity, Index, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { SchoolEntity } from './school.entity';
@@ -26,6 +27,15 @@ export class NotificationEntity {
 
   @Column({ type: 'int', name: 'modifier_id', comment: '수정자 인덱스', nullable: true })
   modifierId: number;
+
+  @Column({
+    type: 'enum',
+    enum: YesNo,
+    name: 'is_active',
+    comment: '활성화 여부',
+    default: YesNo.YES,
+  })
+  isActive: YesNo;
 
   @Column('datetime', {
     name: 'created_at',
