@@ -1,10 +1,12 @@
 import { Controller, Delete, Get, Param, Post, Query } from '@nestjs/common';
 import { MessageResponse } from 'src/commons/dto/message.response';
+import { PaginationRequest } from 'src/commons/dto/pagination.request';
+import { NotificationEntity } from 'src/domains/school/domain/notification.entity';
 import { SchoolEntity } from 'src/domains/school/domain/school.entity';
 import { StudentService } from '../application/student.service';
 import { CreateStudentSchoolRequest } from '../domain/dto/create.student.school.request';
 import { DeleteStudentSchoolRequest } from '../domain/dto/delete.student.school.request';
-import { GetStudentSchoolsRequest } from '../domain/dto/get.student.schools.request';
+import { GetSchoolNotificationsRequest } from '../domain/dto/get.school.notifications.request';
 
 @Controller('api')
 export class StudentController {
@@ -33,13 +35,26 @@ export class StudentController {
   /**
    * 학생이 구독중인 학교 목록 조회
    * @param {number} studentId
-   * @return {}
+   * @return {Promise<SchoolEntity[]>}
    */
   @Get('/students/:studentId/schools')
   async getSubscribeSchools(
     @Param('studentId') studentId: number,
-    @Query() request: GetStudentSchoolsRequest,
+    @Query() request: PaginationRequest,
   ): Promise<SchoolEntity[]> {
     return await this.studentService.getSubscribeSchools(studentId, request);
+  }
+
+  /**
+   * 학생이 구독중인 학교별 소식 조회
+   * @param {GetSchoolNotificationsRequest} studentId
+   * @return {}
+   */
+  @Get('/students/:studentId/schools/:schoolId/notifications')
+  async getSchoolNotifications(
+    @Param() param: GetSchoolNotificationsRequest,
+    @Query() request: PaginationRequest,
+  ): Promise<NotificationEntity[]> {
+    return await this.studentService.getSchoolNotifications(param, request);
   }
 }

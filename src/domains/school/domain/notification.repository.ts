@@ -1,4 +1,6 @@
+import { PaginationRequest } from 'src/commons/dto/pagination.request';
 import { YesNo } from 'src/commons/enum/yes.no';
+import { GetSchoolNotificationsRequest } from 'src/domains/student/domain/dto/get.school.notifications.request';
 import { InsertResult, Repository, UpdateResult } from 'typeorm';
 import { CustomRepository } from '../../../commons/decorator/typeorm.decorator';
 import { CreateNotificationRequest } from './dto/create.notification.request';
@@ -49,5 +51,25 @@ export class NotificationRepository extends Repository<NotificationEntity> {
       })
       .where('id = :notificationId', { notificationId })
       .execute();
+  }
+
+  async findSchoolNotifications(
+    param: GetSchoolNotificationsRequest,
+    request: PaginationRequest,
+  ): Promise<NotificationEntity[]> {
+    const { studentId, schoolId } = param;
+    const { page, perPage } = request;
+
+    return await this.createQueryBuilder('notification')
+      .leftJoin('notification.school', 'school')
+      .leftJoin('school.studentSchool', 'studentSchool')
+      .where('notification.school_id = :schoolId', { schoolId })
+      .andWhere('studentSchool.student_id = :studentId', { studentId })
+      .andWhere('notification.is_active = :isActive', { isActive: YesNo.YES })
+      .andWhere('studentSchool.is_active = :isActive', { isActive: YesNo.YES })
+      .take(perPage)
+      .skip(perPage * (page - 1))
+      .orderBy('notification.createdAt', 'DESC')
+      .getMany();
   }
 }
