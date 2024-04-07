@@ -1,8 +1,10 @@
-import { Controller, Delete, Param, Post } from '@nestjs/common';
+import { Controller, Delete, Get, Param, Post, Query } from '@nestjs/common';
 import { MessageResponse } from 'src/commons/dto/message.response';
+import { SchoolEntity } from 'src/domains/school/domain/school.entity';
 import { StudentService } from '../application/student.service';
 import { CreateStudentSchoolRequest } from '../domain/dto/create.student.school.request';
 import { DeleteStudentSchoolRequest } from '../domain/dto/delete.student.school.request';
+import { GetStudentSchoolsRequest } from '../domain/dto/get.student.schools.request';
 
 @Controller('api')
 export class StudentController {
@@ -26,5 +28,18 @@ export class StudentController {
   @Delete('/students/:studentId/schools/:schoolId')
   async deleteStudentSchool(@Param() param: DeleteStudentSchoolRequest): Promise<MessageResponse> {
     return await this.studentService.deleteStudentSchool(param);
+  }
+
+  /**
+   * 학생이 구독중인 학교 목록 조회
+   * @param {number} studentId
+   * @return {}
+   */
+  @Get('/students/:studentId/schools')
+  async getSubscribeSchools(
+    @Param('studentId') studentId: number,
+    @Query() request: GetStudentSchoolsRequest,
+  ): Promise<SchoolEntity[]> {
+    return await this.studentService.getSubscribeSchools(studentId, request);
   }
 }
