@@ -26,6 +26,17 @@ export class SchoolService {
     }
   }
 
+  async getNotification(notificationId: number) {
+    const result = await this.notificationRepository.getNotification(notificationId);
+
+    if (!result)
+      throw new BadRequestException(
+        `Notification does not exist for notificationId, ${notificationId}`,
+      );
+
+    return result;
+  }
+
   async createNotification(request: CreateNotificationRequest): Promise<MessageResponse> {
     try {
       const result = await this.notificationRepository.createNotification(request);
@@ -39,7 +50,6 @@ export class SchoolService {
       throw new Error(`Failed to create notification: ${error}`);
     }
   }
-
   async deleteNotification(notificationId: number): Promise<MessageResponse> {
     try {
       const result = await this.notificationRepository.deleteNotification(notificationId);
