@@ -35,4 +35,17 @@ export class StudentSchoolRepository extends Repository<StudentSchoolEntity> {
       .andWhere('school_id = :schoolId', { schoolId })
       .execute();
   }
+
+  async deleteStudentSchool(studentId: number, schoolId: number): Promise<UpdateResult> {
+    return await this.createQueryBuilder('studentSchool')
+      .update(StudentSchoolEntity)
+      .set({
+        isActive: YesNo.NO,
+      })
+      .where('student_id = :studentId', {
+        studentId,
+      })
+      .andWhere('school_id = :schoolId', { schoolId })
+      .execute();
+  }
 }
