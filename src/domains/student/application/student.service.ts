@@ -5,9 +5,9 @@ import { SchoolService } from 'src/domains/school/application/school.service';
 import { SchoolEntity } from 'src/domains/school/domain/school.entity';
 import { CreateStudentSchoolRequest } from '../domain/dto/create.student.school.request';
 import { DeleteStudentSchoolRequest } from '../domain/dto/delete.student.school.request';
-import { GetStudentSchoolsRequest } from '../domain/dto/get.student.schools.request';
 import { StudentSchoolEntity } from '../domain/student.school.entity';
 import { StudentSchoolRepository } from '../domain/student.school.repository';
+import { PaginationRequest } from 'src/commons/dto/pagination.request';
 
 @Injectable()
 export class StudentService {
@@ -83,7 +83,7 @@ export class StudentService {
 
   async getSubscribeSchools(
     studentId: number,
-    request: GetStudentSchoolsRequest,
+    request: PaginationRequest,
   ): Promise<SchoolEntity[]> {
     return await this.schoolService.getSubscribeSchools(studentId, request);
   }

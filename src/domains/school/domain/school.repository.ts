@@ -1,5 +1,5 @@
+import { PaginationRequest } from 'src/commons/dto/pagination.request';
 import { YesNo } from 'src/commons/enum/yes.no';
-import { GetStudentSchoolsRequest } from 'src/domains/student/domain/dto/get.student.schools.request';
 import { InsertResult, Repository } from 'typeorm';
 import { CustomRepository } from '../../../commons/decorator/typeorm.decorator';
 import { CreateSchoolRequest } from './dto/create.school.request';
@@ -17,7 +17,7 @@ export class SchoolRepository extends Repository<SchoolEntity> {
 
   async findSubscribeSchools(
     studentId: number,
-    request: GetStudentSchoolsRequest,
+    request: PaginationRequest,
   ): Promise<SchoolEntity[]> {
     const { page, perPage } = request;
 

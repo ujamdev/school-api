@@ -1,10 +1,10 @@
 import { Controller, Delete, Get, Param, Post, Query } from '@nestjs/common';
 import { MessageResponse } from 'src/commons/dto/message.response';
+import { PaginationRequest } from 'src/commons/dto/pagination.request';
 import { SchoolEntity } from 'src/domains/school/domain/school.entity';
 import { StudentService } from '../application/student.service';
 import { CreateStudentSchoolRequest } from '../domain/dto/create.student.school.request';
 import { DeleteStudentSchoolRequest } from '../domain/dto/delete.student.school.request';
-import { GetStudentSchoolsRequest } from '../domain/dto/get.student.schools.request';
 
 @Controller('api')
 export class StudentController {
@@ -38,7 +38,7 @@ export class StudentController {
   @Get('/students/:studentId/schools')
   async getSubscribeSchools(
     @Param('studentId') studentId: number,
-    @Query() request: GetStudentSchoolsRequest,
+    @Query() request: PaginationRequest,
   ): Promise<SchoolEntity[]> {
     return await this.studentService.getSubscribeSchools(studentId, request);
   }
