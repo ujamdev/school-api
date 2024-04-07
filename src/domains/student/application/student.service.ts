@@ -2,6 +2,7 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 import { MessageResponse } from 'src/commons/dto/message.response';
 import { YesNo } from 'src/commons/enum/yes.no';
 import { CreateStudentSchoolRequest } from '../domain/dto/create.student.school.request';
+import { DeleteStudentSchoolRequest } from '../domain/dto/delete.student.school.request';
 import { StudentSchoolEntity } from '../domain/student.school.entity';
 import { StudentSchoolRepository } from '../domain/student.school.repository';
 
@@ -29,7 +30,7 @@ export class StudentService {
         throw new BadRequestException(`School subscribe was not successfully created`);
       }
 
-      return MessageResponse.of('학생이 학교 구독에 성공했습니다.');
+      return MessageResponse.of('학교 구독에 성공했습니다.');
     } catch (error) {
       throw new Error(`Failed to create school subscribe: ${error}`);
     }
@@ -46,9 +47,31 @@ export class StudentService {
         throw new BadRequestException(`Subscribe to school was not successfully updated`);
       }
 
-      return MessageResponse.of('학생이 학교 구독에 성공했습니다.');
+      return MessageResponse.of('학교 구독에 성공했습니다.');
     } catch (error) {
       throw new Error(`Failed to update Subscribe to school: ${error}`);
+    }
+  }
+
+  async deleteStudentSchool(request: DeleteStudentSchoolRequest): Promise<MessageResponse> {
+    const schoolStudent = await this.getStudentSchool(request.studentId, request.schoolId);
+
+    if (schoolStudent?.isActive === YesNo.NO)
+      throw new BadRequestException('해당 학교는 이미 구독 취소 상태입니다.');
+
+    try {
+      const result = await this.studentSchoolRepository.deleteStudentSchool(
+        request.studentId,
+        request.schoolId,
+      );
+
+      if (result.affected === 0) {
+        throw new BadRequestException(`Student-School was not successfully deleted`);
+      }
+
+      return MessageResponse.of('학교 구독 취소에 성공했습니다.');
+    } catch (error) {
+      throw new Error(`Failed to delete Student-School: ${error}`);
     }
   }
 }
