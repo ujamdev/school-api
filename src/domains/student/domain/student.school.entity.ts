@@ -1,7 +1,7 @@
-import { SchoolEntity } from 'src/domains/school/domain/school.entity';
 import { Column, Entity, Index, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { YesNo } from '../../../commons/enum/yes.no';
+import { SchoolEntity } from '../../school/domain/school.entity';
 import { StudentEntity } from './student.entity';
-import { YesNo } from 'src/commons/enum/yes.no';
 
 @Index('FK_student', ['studentId'], {})
 @Index('FK_school', ['schoolId'], {})

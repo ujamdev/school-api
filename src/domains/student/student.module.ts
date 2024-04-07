@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { CustomTypeormModule } from 'src/commons/decorator/custom.typeorm.module';
+import { CustomTypeormModule } from '../../commons/decorator/custom.typeorm.module';
 import { SchoolModule } from '../school/school.module';
 import { StudentService } from './application/student.service';
 import { StudentEntity } from './domain/student.entity';

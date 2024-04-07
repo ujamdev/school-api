@@ -1,6 +1,6 @@
-import { YesNo } from 'src/commons/enum/yes.no';
 import { InsertResult, Repository, UpdateResult } from 'typeorm';
 import { CustomRepository } from '../../../commons/decorator/typeorm.decorator';
+import { YesNo } from '../../../commons/enum/yes.no';
 import { CreateStudentSchoolRequest } from './dto/create.student.school.request';
 import { StudentSchoolEntity } from './student.school.entity';
 

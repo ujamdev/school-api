@@ -1,5 +1,5 @@
-import { NotificationEntity } from 'src/domains/school/domain/notification.entity';
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { NotificationEntity } from '../../school/domain/notification.entity';
 
 @Entity('admin', { schema: 'school_notification' })
 export class AdminEntity {

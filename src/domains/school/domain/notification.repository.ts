@@ -1,8 +1,8 @@
-import { PaginationRequest } from 'src/commons/dto/pagination.request';
-import { YesNo } from 'src/commons/enum/yes.no';
-import { GetSchoolNotificationsRequest } from 'src/domains/student/domain/dto/get.school.notifications.request';
 import { InsertResult, Repository, UpdateResult } from 'typeorm';
 import { CustomRepository } from '../../../commons/decorator/typeorm.decorator';
+import { PaginationRequest } from '../../../commons/dto/pagination.request';
+import { YesNo } from '../../../commons/enum/yes.no';
+import { GetSchoolNotificationsRequest } from '../../student/domain/dto/get.school.notifications.request';
 import { CreateNotificationRequest } from './dto/create.notification.request';
 import { UpdateNotificationRequest } from './dto/update.notification.request';
 import { NotificationEntity } from './notification.entity';
