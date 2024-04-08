@@ -1,11 +1,8 @@
-import { Column, Entity, Index, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { YesNo } from '../../../commons/enum/yes.no';
 import { AdminEntity } from '../../admin/domain/admin.entity';
 import { SchoolEntity } from './school.entity';
 
-@Index('FK_school', ['schoolId'], {})
-@Index('FK_register', ['registerId'], {})
-@Index('FK_modifier', ['modifierId'], {})
 @Entity('notification', { schema: 'school_notification' })
 export class NotificationEntity {
   @PrimaryGeneratedColumn({ type: 'int', name: 'id', comment: '소식 인덱스' })
