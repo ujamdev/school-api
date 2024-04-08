@@ -1,11 +1,4 @@
-import {
-  Column,
-  Entity,
-  JoinColumn,
-  ManyToOne,
-  OneToMany,
-  PrimaryGeneratedColumn
-} from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { RegionEntity } from '../../region/domain/region.entity';
 import { StudentSchoolEntity } from '../../student/domain/student.school.entity';
 import { NotificationEntity } from './notification.entity';

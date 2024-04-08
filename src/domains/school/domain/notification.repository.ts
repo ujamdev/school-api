@@ -4,12 +4,13 @@ import { PaginationRequest } from '../../../commons/dto/pagination.request';
 import { YesNo } from '../../../commons/enum/yes.no';
 import { GetSchoolNotificationsRequest } from '../../student/domain/dto/get.school.notifications.request';
 import { CreateNotificationRequest } from './dto/create.notification.request';
+import { GetNotificationResponse } from './dto/get.notification.response';
 import { UpdateNotificationRequest } from './dto/update.notification.request';
 import { NotificationEntity } from './notification.entity';
 
 @CustomRepository(NotificationEntity)
 export class NotificationRepository extends Repository<NotificationEntity> {
-  async getNotification(notificationId: number): Promise<NotificationEntity> {
+  async getNotification(notificationId: number): Promise<GetNotificationResponse> {
     return await this.createQueryBuilder('notification')
       .where('id = :notificationId', { notificationId })
       .andWhere('is_active = :isActive', { isActive: YesNo.YES })
