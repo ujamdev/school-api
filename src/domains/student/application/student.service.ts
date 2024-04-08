@@ -3,8 +3,8 @@ import { MessageResponse } from '../../../commons/dto/message.response';
 import { PaginationRequest } from '../../../commons/dto/pagination.request';
 import { YesNo } from '../../../commons/enum/yes.no';
 import { SchoolService } from '../../school/application/school.service';
+import { GetNotificationResponse } from '../../school/domain/dto/get.notification.response';
 import { GetSubscribeSchoolResponse } from '../../school/domain/dto/get.subscribe.school.response';
-import { NotificationEntity } from '../../school/domain/notification.entity';
 import { CreateStudentSchoolRequest } from '../domain/dto/create.student.school.request';
 import { DeleteStudentSchoolRequest } from '../domain/dto/delete.student.school.request';
 import { GetSchoolNotificationsRequest } from '../domain/dto/get.school.notifications.request';
@@ -93,7 +93,7 @@ export class StudentService {
   async getSchoolNotifications(
     param: GetSchoolNotificationsRequest,
     request: PaginationRequest,
-  ): Promise<NotificationEntity[]> {
+  ): Promise<GetNotificationResponse[]> {
     return await this.schoolService.getSchoolNotifications(param, request);
   }
 }

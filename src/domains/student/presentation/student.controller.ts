@@ -1,8 +1,8 @@
 import { Controller, Delete, Get, Param, Post, Query } from '@nestjs/common';
 import { MessageResponse } from '../../../commons/dto/message.response';
 import { PaginationRequest } from '../../../commons/dto/pagination.request';
+import { GetNotificationResponse } from '../../school/domain/dto/get.notification.response';
 import { GetSubscribeSchoolResponse } from '../../school/domain/dto/get.subscribe.school.response';
-import { NotificationEntity } from '../../school/domain/notification.entity';
 import { StudentService } from '../application/student.service';
 import { CreateStudentSchoolRequest } from '../domain/dto/create.student.school.request';
 import { DeleteStudentSchoolRequest } from '../domain/dto/delete.student.school.request';
@@ -48,13 +48,13 @@ export class StudentController {
   /**
    * 학생이 구독중인 학교별 소식 조회
    * @param {GetSchoolNotificationsRequest} studentId
-   * @return {Promise<NotificationEntity[]>}
+   * @return {Promise<GetNotificationResponse[]>}
    */
   @Get('/students/:studentId/schools/:schoolId/notifications')
   async getSchoolNotifications(
     @Param() param: GetSchoolNotificationsRequest,
     @Query() request: PaginationRequest,
-  ): Promise<NotificationEntity[]> {
+  ): Promise<GetNotificationResponse[]> {
     return await this.studentService.getSchoolNotifications(param, request);
   }
 }

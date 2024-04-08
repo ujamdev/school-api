@@ -4,9 +4,9 @@ import { PaginationRequest } from '../../../commons/dto/pagination.request';
 import { GetSchoolNotificationsRequest } from '../../student/domain/dto/get.school.notifications.request';
 import { CreateNotificationRequest } from '../domain/dto/create.notification.request';
 import { CreateSchoolRequest } from '../domain/dto/create.school.request';
+import { GetNotificationResponse } from '../domain/dto/get.notification.response';
 import { GetSubscribeSchoolResponse } from '../domain/dto/get.subscribe.school.response';
 import { UpdateNotificationRequest } from '../domain/dto/update.notification.request';
-import { NotificationEntity } from '../domain/notification.entity';
 import { NotificationRepository } from '../domain/notification.repository';
 import { SchoolRepository } from '../domain/school.repository';
 
@@ -99,7 +99,7 @@ export class SchoolService {
   async getSchoolNotifications(
     param: GetSchoolNotificationsRequest,
     request: PaginationRequest,
-  ): Promise<NotificationEntity[]> {
+  ): Promise<GetNotificationResponse[]> {
     return await this.notificationRepository.findSchoolNotifications(param, request);
   }
 }
