@@ -57,7 +57,7 @@ export class NotificationRepository extends Repository<NotificationEntity> {
   async findSchoolNotifications(
     param: GetSchoolNotificationsRequest,
     request: PaginationRequest,
-  ): Promise<NotificationEntity[]> {
+  ): Promise<GetNotificationResponse[]> {
     const { studentId, schoolId } = param;
     const { page, perPage } = request;
 
