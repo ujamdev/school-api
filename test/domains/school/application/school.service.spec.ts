@@ -1,7 +1,8 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { InsertResult } from 'typeorm';
+import { InsertResult, UpdateResult } from 'typeorm';
 import { MessageResponse } from '../../../../src/commons/dto/message.response';
 import { SchoolService } from '../../../../src/domains/school/application/school.service';
+import { CreateSchoolRequest } from '../../../../src/domains/school/domain/dto/create.school.request';
 import { NotificationRepository } from '../../../../src/domains/school/domain/notification.repository';
 import { SchoolRepository } from '../../../../src/domains/school/domain/school.repository';
 
@@ -12,16 +13,7 @@ describe('SchoolService', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [
-        SchoolService,
-        SchoolRepository,
-        {
-          provide: NotificationRepository,
-          useValue: {
-            deleteNotification: jest.fn().mockResolvedValue({ affected: 1 }),
-          },
-        },
-      ],
+      providers: [SchoolService, SchoolRepository, NotificationRepository],
     }).compile();
 
     service = module.get<SchoolService>(SchoolService);
@@ -32,7 +24,8 @@ describe('SchoolService', () => {
   describe('createSchool', () => {
     it('should successfully create a school', async () => {
       // given
-      const request = { regionId: 1, name: '서울초등학교' };
+      const request = { regionId: 1, name: '서울초등학교' } as CreateSchoolRequest;
+
       jest
         .spyOn(schoolRepository, 'createSchool')
         .mockResolvedValue({ raw: { affectedRows: 1 } } as InsertResult);
@@ -49,6 +42,10 @@ describe('SchoolService', () => {
     it('should successfully delete a notification', async () => {
       // given
       const notificationId = 1;
+
+      jest
+        .spyOn(notificationRepository, 'deleteNotification')
+        .mockResolvedValue({ affected: 1 } as UpdateResult);
 
       // when
       const result = await service.deleteNotification(notificationId);
