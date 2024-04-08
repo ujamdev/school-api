@@ -8,7 +8,7 @@ import { SchoolEntity } from '../../school/domain/school.entity';
 import { CreateStudentSchoolRequest } from '../domain/dto/create.student.school.request';
 import { DeleteStudentSchoolRequest } from '../domain/dto/delete.student.school.request';
 import { GetSchoolNotificationsRequest } from '../domain/dto/get.school.notifications.request';
-import { StudentSchoolEntity } from '../domain/student.school.entity';
+import { GetStudentSchoolResponse } from '../domain/dto/get.student.school.response';
 import { StudentSchoolRepository } from '../domain/student.school.repository';
 
 @Injectable()
@@ -18,7 +18,7 @@ export class StudentService {
     private readonly schoolService: SchoolService,
   ) { }
 
-  async getStudentSchool(studentId: number, schoolId: number): Promise<StudentSchoolEntity> {
+  async getStudentSchool(studentId: number, schoolId: number): Promise<GetStudentSchoolResponse> {
     return await this.studentSchoolRepository.getStudentSchool(studentId, schoolId);
   }
 
