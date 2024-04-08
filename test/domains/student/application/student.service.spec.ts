@@ -1,8 +1,10 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { UpdateResult } from 'typeorm';
 import { MessageResponse } from '../../../../src/commons/dto/message.response';
+import { PaginationRequest } from '../../../../src/commons/dto/pagination.request';
 import { YesNo } from '../../../../src/commons/enum/yes.no';
 import { SchoolService } from '../../../../src/domains/school/application/school.service';
+import { GetSubscribeSchoolResponse } from '../../../../src/domains/school/domain/dto/get.subscribe.school.response';
 import { NotificationRepository } from '../../../../src/domains/school/domain/notification.repository';
 import { SchoolRepository } from '../../../../src/domains/school/domain/school.repository';
 import { StudentService } from '../../../../src/domains/student/application/student.service';
@@ -12,6 +14,7 @@ import { StudentSchoolRepository } from '../../../../src/domains/student/domain/
 describe('StudentService', () => {
   let service: StudentService;
   let studentSchoolRepository: StudentSchoolRepository;
+  let schoolService: SchoolService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -25,6 +28,7 @@ describe('StudentService', () => {
     }).compile();
 
     service = module.get<StudentService>(StudentService);
+    schoolService = module.get<SchoolService>(SchoolService);
     studentSchoolRepository = module.get<StudentSchoolRepository>(StudentSchoolRepository);
   });
 
@@ -50,6 +54,34 @@ describe('StudentService', () => {
 
       //then
       expect(result).toEqual(MessageResponse.of('학교 구독 취소에 성공했습니다.'));
+    });
+  });
+
+  describe('getSubscribeSchools', () => {
+    it('should return subscribed schools for a student', async () => {
+      //given
+      const studentId = 1;
+      const paginationRequest: PaginationRequest = { page: 1, perPage: 10 };
+
+      const mockSchools: GetSubscribeSchoolResponse[] = [
+        {
+          id: 1,
+          name: '서울초등학교',
+          studentSchool: [{ studentId: 1, createdAt: new Date('2024-04-06T16:09:59.000Z') }],
+        },
+        {
+          id: 2,
+          name: '경기초등학교',
+          studentSchool: [{ studentId: 1, createdAt: new Date('2024-04-06T16:09:59.000Z') }],
+        },
+      ];
+      jest.spyOn(schoolService, 'getSubscribeSchools').mockResolvedValue(mockSchools);
+
+      //when
+      const result = await service.getSubscribeSchools(studentId, paginationRequest);
+
+      //then
+      expect(result).toEqual(mockSchools);
     });
   });
 });
