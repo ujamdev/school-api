@@ -1,10 +1,8 @@
-import { Column, Entity, Index, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { YesNo } from '../../../commons/enum/yes.no';
 import { SchoolEntity } from '../../school/domain/school.entity';
 import { StudentEntity } from './student.entity';
 
-@Index('FK_student', ['studentId'], {})
-@Index('FK_school', ['schoolId'], {})
 @Entity('student_school', { schema: 'school_notification' })
 export class StudentSchoolEntity {
   @PrimaryGeneratedColumn({

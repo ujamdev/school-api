@@ -1,17 +1,15 @@
 import {
   Column,
   Entity,
-  Index,
   JoinColumn,
   ManyToOne,
   OneToMany,
-  PrimaryGeneratedColumn,
+  PrimaryGeneratedColumn
 } from 'typeorm';
 import { RegionEntity } from '../../region/domain/region.entity';
 import { StudentSchoolEntity } from '../../student/domain/student.school.entity';
 import { NotificationEntity } from './notification.entity';
 
-@Index('FK_region', ['regionId'], {})
 @Entity('school', { schema: 'school_notification' })
 export class SchoolEntity {
   @PrimaryGeneratedColumn({ type: 'int', name: 'id', comment: '학교 인덱스' })
