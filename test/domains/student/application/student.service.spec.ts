@@ -4,6 +4,7 @@ import { MessageResponse } from '../../../../src/commons/dto/message.response';
 import { PaginationRequest } from '../../../../src/commons/dto/pagination.request';
 import { YesNo } from '../../../../src/commons/enum/yes.no';
 import { SchoolService } from '../../../../src/domains/school/application/school.service';
+import { GetNotificationResponse } from '../../../../src/domains/school/domain/dto/get.notification.response';
 import { GetSubscribeSchoolResponse } from '../../../../src/domains/school/domain/dto/get.subscribe.school.response';
 import { NotificationRepository } from '../../../../src/domains/school/domain/notification.repository';
 import { SchoolRepository } from '../../../../src/domains/school/domain/school.repository';
@@ -82,6 +83,45 @@ describe('StudentService', () => {
 
       //then
       expect(result).toEqual(mockSchools);
+    });
+  });
+
+  describe('getSchoolNotifications', () => {
+    it('should return school notifications', async () => {
+      //given
+      const param = { schoolId: 1, studentId: 1 };
+      const paginationRequest: PaginationRequest = { page: 1, perPage: 10 };
+
+      const mockNotifications: GetNotificationResponse[] = [
+        {
+          id: 1,
+          schoolId: 1,
+          content: '서울초등학교 소식1입니다.',
+          registerId: 1,
+          modifierId: null,
+          isActive: YesNo.YES,
+          createdAt: new Date('2024-04-06T16:09:59.000Z'),
+          updatedAt: new Date('2024-04-06T16:09:59.000Z'),
+        },
+        {
+          id: 1,
+          schoolId: 1,
+          content: '서울초등학교 소식2입니다.',
+          registerId: 1,
+          modifierId: null,
+          isActive: YesNo.YES,
+          createdAt: new Date('2024-04-07T12:14:34.000Z'),
+          updatedAt: new Date('2024-04-07T12:14:34.000Z'),
+        },
+      ];
+
+      jest.spyOn(schoolService, 'getSchoolNotifications').mockResolvedValue(mockNotifications);
+
+      //when
+      const result = await service.getSchoolNotifications(param, paginationRequest);
+
+      //then
+      expect(result).toEqual(mockNotifications);
     });
   });
 });
