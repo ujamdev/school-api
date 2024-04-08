@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable, InternalServerErrorException } from '@nestjs/common';
 import { MessageResponse } from '../../../commons/dto/message.response';
 import { PaginationRequest } from '../../../commons/dto/pagination.request';
 import { GetSchoolNotificationsRequest } from '../../student/domain/dto/get.school.notifications.request';
@@ -21,13 +21,14 @@ export class SchoolService {
     try {
       const result = await this.schoolRepository.createSchool(request);
 
-      if (result.raw.affectedRows === 0) {
+      if (result.raw.affectedRows === 0)
         throw new BadRequestException(`School was not successfully created`);
-      }
 
       return MessageResponse.of('학교 등록에 성공했습니다.');
     } catch (error) {
-      throw new Error(`Failed to create school: ${error}`);
+      if (error instanceof BadRequestException) throw new BadRequestException(error);
+
+      throw new InternalServerErrorException(`Failed to create school: ${error}`);
     }
   }
 
@@ -46,13 +47,14 @@ export class SchoolService {
     try {
       const result = await this.notificationRepository.createNotification(request);
 
-      if (result.raw.affectedRows === 0) {
+      if (result.raw.affectedRows === 0)
         throw new BadRequestException(`Notification was not successfully created`);
-      }
 
       return MessageResponse.of('소식 등록에 성공했습니다.');
     } catch (error) {
-      throw new Error(`Failed to create notification: ${error}`);
+      if (error instanceof BadRequestException) throw new BadRequestException(error);
+
+      throw new InternalServerErrorException(`Failed to create notification: ${error}`);
     }
   }
 
@@ -65,13 +67,14 @@ export class SchoolService {
     try {
       const result = await this.notificationRepository.updateNotification(notificationId, request);
 
-      if (result.affected === 0) {
+      if (result.affected === 0)
         throw new BadRequestException(`Notification was not successfully updated`);
-      }
 
       return MessageResponse.of('소식 수정에 성공했습니다.');
     } catch (error) {
-      throw new Error(`Failed to update notification: ${error}`);
+      if (error instanceof BadRequestException) throw new BadRequestException(error);
+
+      throw new InternalServerErrorException(`Failed to update notification: ${error}`);
     }
   }
 
@@ -79,13 +82,14 @@ export class SchoolService {
     try {
       const result = await this.notificationRepository.deleteNotification(notificationId);
 
-      if (result.affected === 0) {
+      if (result.affected === 0)
         throw new BadRequestException(`Notification was not successfully deleted`);
-      }
 
       return MessageResponse.of('소식 삭제에 성공했습니다.');
     } catch (error) {
-      throw new Error(`Failed to delete notification: ${error}`);
+      if (error instanceof BadRequestException) throw new BadRequestException(error);
+
+      throw new InternalServerErrorException(`Failed to delete notification: ${error}`);
     }
   }
 
