@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable, InternalServerErrorException } from '@nestjs/common';
 import { MessageResponse } from '../../../commons/dto/message.response';
 import { PaginationRequest } from '../../../commons/dto/pagination.request';
 import { YesNo } from '../../../commons/enum/yes.no';
@@ -26,7 +26,7 @@ export class StudentService {
     const studentSchool = await this.getStudentSchool(request.studentId, request.schoolId);
 
     if (studentSchool?.isActive === YesNo.YES)
-      throw new BadRequestException('해당 학교는 이미 구독이 되어있습니다.');
+      throw new BadRequestException('The school is already subscribed.');
 
     if (studentSchool)
       return await this.updateSubscribeToSchool(request.studentId, request.schoolId);
@@ -34,13 +34,14 @@ export class StudentService {
     try {
       const result = await this.studentSchoolRepository.createStudentSchool(request);
 
-      if (result.raw.affectedRows === 0) {
+      if (result.raw.affectedRows === 0)
         throw new BadRequestException(`School subscribe was not successfully created`);
-      }
 
       return MessageResponse.of('학교 구독에 성공했습니다.');
     } catch (error) {
-      throw new Error(`Failed to create school subscribe: ${error}`);
+      if (error instanceof BadRequestException) throw new BadRequestException(error);
+
+      throw new InternalServerErrorException(`Failed to create school subscribe: ${error}`);
     }
   }
 
@@ -51,13 +52,14 @@ export class StudentService {
         schoolId,
       );
 
-      if (result.affected === 0) {
+      if (result.affected === 0)
         throw new BadRequestException(`Subscribe to school was not successfully updated`);
-      }
 
       return MessageResponse.of('학교 구독에 성공했습니다.');
     } catch (error) {
-      throw new Error(`Failed to update Subscribe to school: ${error}`);
+      if (error instanceof BadRequestException) throw new BadRequestException(error);
+
+      throw new InternalServerErrorException(`Failed to update Subscribe to school: ${error}`);
     }
   }
 
@@ -65,7 +67,7 @@ export class StudentService {
     const schoolStudent = await this.getStudentSchool(request.studentId, request.schoolId);
 
     if (schoolStudent?.isActive === YesNo.NO)
-      throw new BadRequestException('해당 학교는 이미 구독 취소 상태입니다.');
+      throw new BadRequestException('The school has already unsubscribed.');
 
     try {
       const result = await this.studentSchoolRepository.deleteStudentSchool(
@@ -73,13 +75,14 @@ export class StudentService {
         request.schoolId,
       );
 
-      if (result.affected === 0) {
+      if (result.affected === 0)
         throw new BadRequestException(`Student-School was not successfully deleted`);
-      }
 
       return MessageResponse.of('학교 구독 취소에 성공했습니다.');
     } catch (error) {
-      throw new Error(`Failed to delete Student-School: ${error}`);
+      if (error instanceof BadRequestException) throw new BadRequestException(error);
+
+      throw new InternalServerErrorException(`Failed to delete Student-School: ${error}`);
     }
   }
 
