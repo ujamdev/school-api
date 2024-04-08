@@ -4,10 +4,10 @@ import { PaginationRequest } from '../../../commons/dto/pagination.request';
 import { GetSchoolNotificationsRequest } from '../../student/domain/dto/get.school.notifications.request';
 import { CreateNotificationRequest } from '../domain/dto/create.notification.request';
 import { CreateSchoolRequest } from '../domain/dto/create.school.request';
+import { GetSubscribeSchoolResponse } from '../domain/dto/get.subscribe.school.response';
 import { UpdateNotificationRequest } from '../domain/dto/update.notification.request';
 import { NotificationEntity } from '../domain/notification.entity';
 import { NotificationRepository } from '../domain/notification.repository';
-import { SchoolEntity } from '../domain/school.entity';
 import { SchoolRepository } from '../domain/school.repository';
 
 @Injectable()
@@ -92,7 +92,7 @@ export class SchoolService {
   async getSubscribeSchools(
     studentId: number,
     request: PaginationRequest,
-  ): Promise<SchoolEntity[]> {
+  ): Promise<GetSubscribeSchoolResponse[]> {
     return await this.schoolRepository.findSubscribeSchools(studentId, request);
   }
 

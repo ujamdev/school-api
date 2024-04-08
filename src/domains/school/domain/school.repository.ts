@@ -3,6 +3,7 @@ import { CustomRepository } from '../../../commons/decorator/typeorm.decorator';
 import { PaginationRequest } from '../../../commons/dto/pagination.request';
 import { YesNo } from '../../../commons/enum/yes.no';
 import { CreateSchoolRequest } from './dto/create.school.request';
+import { GetSubscribeSchoolResponse } from './dto/get.subscribe.school.response';
 import { SchoolEntity } from './school.entity';
 
 @CustomRepository(SchoolEntity)
@@ -18,7 +19,7 @@ export class SchoolRepository extends Repository<SchoolEntity> {
   async findSubscribeSchools(
     studentId: number,
     request: PaginationRequest,
-  ): Promise<SchoolEntity[]> {
+  ): Promise<GetSubscribeSchoolResponse[]> {
     const { page, perPage } = request;
 
     return await this.createQueryBuilder('school')
