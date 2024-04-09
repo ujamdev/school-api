@@ -67,7 +67,19 @@ export class NotificationRepository extends Repository<NotificationEntity> {
       .where('notification.school_id = :schoolId', { schoolId })
       .andWhere('studentSchool.student_id = :studentId', { studentId })
       .andWhere('notification.is_active = :isActive', { isActive: YesNo.YES })
-      .andWhere('studentSchool.is_active = :isActive', { isActive: YesNo.YES })
+      .andWhere(
+        `
+        (
+          studentSchool.is_active = :isActive 
+          AND notification.created_at >= studentSchool.created_at 
+        ) OR (
+          studentSchool.is_active = :isInactive 
+          AND notification.created_at >= studentSchool.created_at 
+          AND notification.created_at <= studentSchool.updated_at 
+        )
+        `,
+        { isActive: YesNo.YES, isInactive: YesNo.NO },
+      )
       .take(perPage)
       .skip(perPage * (page - 1))
       .orderBy('notification.createdAt', 'DESC')
@@ -87,14 +99,15 @@ export class NotificationRepository extends Repository<NotificationEntity> {
       .andWhere('notification.is_active = :isActive', { isActive: YesNo.YES })
       .andWhere(
         `
-      (
-        studentSchool.is_active = :isActive 
-        AND notification.created_at >= studentSchool.created_at 
-      ) OR (
-        studentSchool.is_active = :isInactive 
-        AND notification.created_at >= studentSchool.created_at 
-        AND notification.created_at <= studentSchool.updated_at 
-      )`,
+        (
+          studentSchool.is_active = :isActive 
+          AND notification.created_at >= studentSchool.created_at 
+        ) OR (
+          studentSchool.is_active = :isInactive 
+          AND notification.created_at >= studentSchool.created_at 
+          AND notification.created_at <= studentSchool.updated_at 
+        )
+        `,
         { isActive: YesNo.YES, isInactive: YesNo.NO },
       )
       .take(perPage)
