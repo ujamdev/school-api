@@ -99,7 +99,7 @@ export class StudentService {
     param: GetSchoolNotificationsRequest,
     request: PaginationRequest,
   ): Promise<GetNotificationResponse[]> {
-    const cacheKey = `student:${param.studentId}:school:${param.schoolId}:notifications`;
+    const cacheKey = `student:${param.studentId}:school:${param.schoolId}:notifications:page:${request.page}`;
     const cacheValue: GetNotificationResponse[] = await this.cachingService.get(cacheKey);
 
     if (cacheValue) return cacheValue;
@@ -115,7 +115,7 @@ export class StudentService {
     studentId: number,
     request: PaginationRequest,
   ): Promise<GetNotificationResponse[]> {
-    const cacheKey = `student:${studentId}:notifications`;
+    const cacheKey = `student:${studentId}:notifications:page:${request.page}`;
     const cacheValue: GetNotificationResponse[] = await this.cachingService.get(cacheKey);
 
     if (cacheValue) return cacheValue;
