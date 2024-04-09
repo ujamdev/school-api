@@ -29,6 +29,7 @@ export class StudentSchoolRepository extends Repository<StudentSchoolEntity> {
       .update(StudentSchoolEntity)
       .set({
         isActive: YesNo.YES,
+        createdAt: new Date(),
       })
       .where('student_id = :studentId', {
         studentId,
