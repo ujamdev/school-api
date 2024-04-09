@@ -106,4 +106,11 @@ export class SchoolService {
   ): Promise<GetNotificationResponse[]> {
     return await this.notificationRepository.findSchoolNotifications(param, request);
   }
+
+  async getSchoolsNotifications(
+    studentId: number,
+    request: PaginationRequest,
+  ): Promise<GetNotificationResponse[]> {
+    return await this.notificationRepository.findSchoolsNotifications(studentId, request);
+  }
 }
