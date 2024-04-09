@@ -99,7 +99,16 @@ export class StudentService {
     param: GetSchoolNotificationsRequest,
     request: PaginationRequest,
   ): Promise<GetNotificationResponse[]> {
-    return await this.schoolService.getSchoolNotifications(param, request);
+    const cacheKey = `student:${param.studentId}:school:${param.schoolId}:notifications`;
+    const cacheValue: GetNotificationResponse[] = await this.cachingService.get(cacheKey);
+
+    if (cacheValue) return cacheValue;
+
+    const notifications = await this.schoolService.getSchoolNotifications(param, request);
+
+    await this.cachingService.set(cacheKey, notifications);
+
+    return notifications;
   }
 
   async getSchoolsNotifications(
