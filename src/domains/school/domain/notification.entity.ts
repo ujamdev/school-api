@@ -1,4 +1,4 @@
-import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 import { YesNo } from '../../../commons/enum/yes.no';
 import { AdminEntity } from '../../admin/domain/admin.entity';
 import { SchoolEntity } from './school.entity';
@@ -41,7 +41,7 @@ export class NotificationEntity {
   })
   createdAt: Date;
 
-  @Column('datetime', {
+  @UpdateDateColumn({
     name: 'updated_at',
     comment: '수정 일시',
     default: () => 'CURRENT_TIMESTAMP',
