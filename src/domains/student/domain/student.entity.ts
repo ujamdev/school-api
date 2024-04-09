@@ -1,4 +1,4 @@
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 import { StudentSchoolEntity } from './student.school.entity';
 
 @Entity('student', { schema: 'school_notification' })
@@ -13,7 +13,7 @@ export class StudentEntity {
   })
   createdAt: Date;
 
-  @Column('datetime', {
+  @UpdateDateColumn({
     name: 'updated_at',
     comment: '수정 일시',
     default: () => 'CURRENT_TIMESTAMP',

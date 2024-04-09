@@ -47,7 +47,7 @@ export class StudentController {
 
   /**
    * 학생이 구독중인 학교별 소식 조회
-   * @param {GetSchoolNotificationsRequest} studentId
+   * @param {GetSchoolNotificationsRequest} param
    * @return {Promise<GetNotificationResponse[]>}
    */
   @Get('/students/:studentId/schools/:schoolId/notifications')
@@ -56,5 +56,18 @@ export class StudentController {
     @Query() request: PaginationRequest,
   ): Promise<GetNotificationResponse[]> {
     return await this.studentService.getSchoolNotifications(param, request);
+  }
+
+  /**
+   * 학생이 구독중인 학교 소식 조회
+   * @param {GetSchoolNotificationsRequest} studentId
+   * @return {Promise<GetNotificationResponse[]>}
+   */
+  @Get('/students/:studentId/schools/notifications')
+  async getSchoolsNotifications(
+    @Param('studentId') studentId: number,
+    @Query() request: PaginationRequest,
+  ): Promise<GetNotificationResponse[]> {
+    return await this.studentService.getSchoolsNotifications(studentId, request);
   }
 }

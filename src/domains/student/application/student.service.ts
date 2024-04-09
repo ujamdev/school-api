@@ -1,4 +1,5 @@
 import { BadRequestException, Injectable, InternalServerErrorException } from '@nestjs/common';
+import { CachingService } from '../../../commons/caching/caching.service';
 import { MessageResponse } from '../../../commons/dto/message.response';
 import { PaginationRequest } from '../../../commons/dto/pagination.request';
 import { YesNo } from '../../../commons/enum/yes.no';
@@ -16,6 +17,7 @@ export class StudentService {
   constructor(
     private readonly studentSchoolRepository: StudentSchoolRepository,
     private readonly schoolService: SchoolService,
+    private readonly cachingService: CachingService,
   ) { }
 
   async getStudentSchool(studentId: number, schoolId: number): Promise<GetStudentSchoolResponse> {
@@ -98,5 +100,21 @@ export class StudentService {
     request: PaginationRequest,
   ): Promise<GetNotificationResponse[]> {
     return await this.schoolService.getSchoolNotifications(param, request);
+  }
+
+  async getSchoolsNotifications(
+    studentId: number,
+    request: PaginationRequest,
+  ): Promise<GetNotificationResponse[]> {
+    const cacheKey = `student:${studentId}:notifications`;
+    const cacheValue: GetNotificationResponse[] = await this.cachingService.get(cacheKey);
+
+    if (cacheValue) return cacheValue;
+
+    const notifications = await this.schoolService.getSchoolsNotifications(studentId, request);
+
+    await this.cachingService.set(cacheKey, notifications);
+
+    return notifications;
   }
 }

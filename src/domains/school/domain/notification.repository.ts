@@ -73,4 +73,33 @@ export class NotificationRepository extends Repository<NotificationEntity> {
       .orderBy('notification.createdAt', 'DESC')
       .getMany();
   }
+
+  async findSchoolsNotifications(
+    studentId: number,
+    request: PaginationRequest,
+  ): Promise<GetNotificationResponse[]> {
+    const { page, perPage } = request;
+
+    return await this.createQueryBuilder('notification')
+      .leftJoin('notification.school', 'school')
+      .leftJoin('school.studentSchool', 'studentSchool')
+      .where('studentSchool.student_id = :studentId', { studentId })
+      .andWhere('notification.is_active = :isActive', { isActive: YesNo.YES })
+      .andWhere(
+        `
+      (
+        studentSchool.is_active = :isActive 
+        AND notification.created_at >= studentSchool.created_at 
+      ) OR (
+        studentSchool.is_active = :isInactive 
+        AND notification.created_at >= studentSchool.created_at 
+        AND notification.created_at <= studentSchool.updated_at 
+      )`,
+        { isActive: YesNo.YES, isInactive: YesNo.NO },
+      )
+      .take(perPage)
+      .skip(perPage * (page - 1))
+      .orderBy('notification.createdAt', 'DESC')
+      .getMany();
+  }
 }
