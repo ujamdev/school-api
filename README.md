@@ -1,73 +1,96 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+# 뉴스피드기능
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+## 소개
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+학교 소식을 전달하고 받아보는 '학교소식 뉴스피드' 를 위한 백엔드 구현했습니다.
 
-## Description
+---
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
-
-## Installation
+## 설치
 
 ```bash
-$ npm install
+# 해당 프로젝트를 클론합니다.
+$ git clone https://github.com/ujamdev/school-api.git
+
+# 프로젝트 디렉토리로 이동합니다.
+$ cd school-api
+
+# 패키지 설치합니다. (Yarn 사용 시)
+$ yarn install
 ```
 
-## Running the app
+## 환경 설정
+
+```javascript
+# local.yml
+# 로컬 환경 DB에 맞는 설정으로 변경
+
+server:
+  port: 8080
+
+database:
+  type: 'mysql'
+  host: 'localhost'
+  port: 3306
+  username: 'root'
+  password: '1234'
+  database: 'school_notification'
+
+```
+
+[DB 스키마 등록](#문서)
+
+```text
+작성된 DB 스키마에 따라 스키마, 테이블 및 데이터 등록을 해줍니다.
+```
+
+## 앱 실행
 
 ```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+# 로컬 환경 실행합니다. (Yarn 사용 시)
+$ yarn run start
 ```
 
-## Test
+## 테스트
 
 ```bash
-# unit tests
-$ npm run test
+# 단위 테스트 실행합니다. (Yarn 사용 시)
+$ yarn run test
 
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+# 테스트 커버리지 확인합니다. (Yarn 사용 시)
+$ yarn run test:cov
 ```
 
-## Support
+---
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+## 기능 소개
 
-## Stay in touch
+| 학교 관리자가 학교 생성 | 학교 관리자가 학교 소식 생성 |
+| :---------------------: | :--------------------------: |
+|                         |                              |
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+| 학교 관리자가 학교 소식 수정 | 학교 관리자가 학교 소식 삭제 |
+| :--------------------------: | :--------------------------: |
+|                              |                              |
 
-## License
+| 학생이 학교 구독 | 학생이 구독중인 학교 구독 취소 |
+| :--------------: | :----------------------------: |
+|                  |                                |
 
-Nest is [MIT licensed](LICENSE).
+| 학생이 구독중인 학교 목록 조회 | 학생이 구독중인 학교별 소식 조회 |
+| :----------------------------: | :------------------------------: |
+|                                |
+
+| 학생이 구독중인 학교 소식 조회 |
+| :----------------------------: |
+|                                |
+
+---
+
+## 문서
+
+> [📜 DB 스키마](https://stream-hortensia-a2d.notion.site/DB-80496a7bacfc40d09415cf47115c4cb6?pvs=4)
+
+> [📜 API 명세서](https://stream-hortensia-a2d.notion.site/API-d9b282fda3c94268bc0639130a53b906?pvs=4)
+
+---
